@@ -19,6 +19,7 @@ const dice = document.querySelector(".dice");
 
 // adds the css class called hidden
 dice.classList.add("hidden");
+
 const playerSwitch = function () {
   document.querySelector(`#current--${activePlayer}`).textContent = 0;
   currentScore = 0;
@@ -27,8 +28,7 @@ const playerSwitch = function () {
   p1Active.classList.toggle("player--active");
 };
 
-// Rolling dice functionality
-btnRoll.addEventListener("click", function () {
+const roll = function () {
   // 1. Generating a randon dice roll
   const roll = Math.trunc(Math.random() * 6) + 1;
 
@@ -47,7 +47,10 @@ btnRoll.addEventListener("click", function () {
     playerSwitch();
     console.log(currentScore);
   }
-});
+};
+
+// Rolling dice functionality
+btnRoll.addEventListener("click", roll);
 
 btnHold.addEventListener("click", function () {
   if (activePlayer === 0) {
@@ -58,5 +61,15 @@ btnHold.addEventListener("click", function () {
     scoreP1El.textContent = scores[1];
   }
   playerSwitch();
-  console.log(scores, currentScore);
+  if (scores[0] >= 100) {
+    p0Active.classList.remove("player--active");
+    p0Active.classList.add("player--winner");
+    btnHold.removeEventListener("click");
+    btnRoll.removeEventListener();
+  } else if (scores[1] >= 100) {
+    p0Active.classList.remove("player--active");
+    p1Active.classList.add("player--winner");
+    btnHold.removeEventListener();
+    btnRoll.removeEventListener();
+  }
 });
