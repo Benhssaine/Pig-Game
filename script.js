@@ -64,12 +64,14 @@ const hold = function () {
     p0Active.classList.add("player--winner");
     btnRoll.removeEventListener("click", roll);
     btnHold.removeEventListener("click", hold);
+    dice.classList.add("hidden");
   } else if (scores[1] >= 100) {
     p0Active.classList.remove("player--active");
     p1Active.classList.remove("player--active");
     p1Active.classList.add("player--winner");
     btnRoll.removeEventListener("click", roll);
     btnHold.removeEventListener("click", hold);
+    dice.classList.add("hidden");
   }
 };
 
