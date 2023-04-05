@@ -49,10 +49,7 @@ const roll = function () {
   }
 };
 
-// Rolling dice functionality
-btnRoll.addEventListener("click", roll);
-
-btnHold.addEventListener("click", function () {
+const hold = function () {
   if (activePlayer === 0) {
     scores[0] += currentScore;
     scoreP0El.textContent = scores[0];
@@ -63,13 +60,35 @@ btnHold.addEventListener("click", function () {
   playerSwitch();
   if (scores[0] >= 100) {
     p0Active.classList.remove("player--active");
+    p1Active.classList.remove("player--active");
     p0Active.classList.add("player--winner");
-    btnHold.removeEventListener("click");
-    btnRoll.removeEventListener();
+    btnRoll.removeEventListener("click", roll);
+    btnHold.removeEventListener("click", hold);
   } else if (scores[1] >= 100) {
     p0Active.classList.remove("player--active");
+    p1Active.classList.remove("player--active");
     p1Active.classList.add("player--winner");
-    btnHold.removeEventListener();
-    btnRoll.removeEventListener();
+    btnRoll.removeEventListener("click", roll);
+    btnHold.removeEventListener("click", hold);
   }
+};
+
+// Rolling dice functionality
+btnRoll.addEventListener("click", roll);
+
+btnHold.addEventListener("click", hold);
+
+btnNew.addEventListener("click", function () {
+  p1Active.classList.remove("player--winner");
+  p0Active.classList.remove("player--winner");
+  p0Active.classList.add("player--active");
+  btnRoll.addEventListener("click", roll);
+  btnHold.addEventListener("click", hold);
+  currentScore = 0;
+  currentP0ScoreEl.textContent = currentScore;
+  currentP1ScoreEl.textContent = currentScore;
+  scoreP0El.textContent = currentScore;
+  scoreP1El.textContent = currentScore;
+  scores[0] = 0;
+  scores[1] = 0;
 });
